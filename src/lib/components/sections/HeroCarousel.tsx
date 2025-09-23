@@ -19,7 +19,7 @@ export function HeroCarousel({ images, className }: Props) {
   return (
     <div
       className={
-        `relative aspect-[16/9] w-full overflow-hidden rounded-lg border-[11px] border-white md:aspect-[16/9] ${
+        `relative aspect-[16/9] w-full overflow-hidden rounded-lg border-[11px] border-[color:var(--color-carousel-border)] md:aspect-[16/9] ${
           className ?? ''
         }`
       }
@@ -42,3 +42,4 @@ export function HeroCarousel({ images, className }: Props) {
     </div>
   );
 }
+

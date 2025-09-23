@@ -1,6 +1,6 @@
 :root {
-  --color-primary: #000000;
-  --color-secondary: #ffffff;
+  --color-primary: var(--color-page-bg);
+  --color-secondary: var(--color-text-primary);
   --color-brandRed: #fd0302;
   --color-accent: #02fcfd; /* Use extremely sparingly: focus ring, tiny pills, micro-icons */
 }
@@ -16,4 +16,3 @@ body {
   color: var(--color-secondary);
   background: var(--color-primary);
 }
-

@@ -8,20 +8,80 @@
     --color-secondary: #ffffff;
     --color-brandRed: #fd0302;
     --color-accent: #02fcfd;
+    --body-background: radial-gradient(circle at top left, rgba(255, 100, 100, 0.25), transparent 45%),
+      radial-gradient(circle at bottom right, rgba(255, 200, 80, 0.2), transparent 40%),
+      #050505;
+    --color-page-bg: #050505;
+    --color-surface: rgba(255, 255, 255, 0.05);
+    --color-surface-strong: rgba(255, 255, 255, 0.1);
+    --color-text-primary: #f8f9fa;
+    --color-text-muted: rgba(248, 249, 250, 0.8);
+    --color-text-subtle: rgba(248, 249, 250, 0.7);
+    --color-text-soft: rgba(248, 249, 250, 0.5);
+    --color-border-default: rgba(255, 255, 255, 0.1);
+    --color-border-strong: rgba(255, 255, 255, 0.2);
+    --color-border-subtle: rgba(255, 255, 255, 0.15);
+    --color-placeholder: rgba(248, 249, 250, 0.45);
+    --color-header-bg: rgba(0, 0, 0, 0.7);
+    --color-header-bg-blur: rgba(0, 0, 0, 0.4);
+    --color-drawer-bg: rgba(0, 0, 0, 0.95);
+    --color-overlay: rgba(0, 0, 0, 0.5);
+    --color-overlay-strong: rgba(0, 0, 0, 0.95);
+    --color-menu-hover: rgba(255, 255, 255, 0.1);
+    --color-carousel-border: #ffffff;
+    --color-image-badge-bg: rgba(0, 0, 0, 0.6);
+    --color-image-badge-text: #ffffff;
+    --color-button-primary-text: #ffffff;
+    --color-button-outline-border: rgba(255, 255, 255, 0.2);
+    --color-button-outline-hover: rgba(255, 255, 255, 0.1);
+    --color-tooltip-bg: rgba(0, 0, 0, 0.9);
+    --color-tooltip-text: #ffffff;
     color-scheme: dark;
     font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background-color: #050505;
-    color: #f8f9fa;
+  }
+
+  [data-theme='dark'] {
+    color-scheme: dark;
+  }
+
+  [data-theme='light'] {
+    color-scheme: light;
+    --color-primary: #ffffff;
+    --color-secondary: #111111;
+    --body-background: #ffffff;
+    --color-page-bg: #ffffff;
+    --color-surface: rgba(17, 17, 17, 0.04);
+    --color-surface-strong: rgba(17, 17, 17, 0.08);
+    --color-text-primary: #111111;
+    --color-text-muted: rgba(17, 17, 17, 0.75);
+    --color-text-subtle: rgba(17, 17, 17, 0.6);
+    --color-text-soft: rgba(17, 17, 17, 0.4);
+    --color-border-default: rgba(17, 17, 17, 0.12);
+    --color-border-strong: rgba(17, 17, 17, 0.2);
+    --color-border-subtle: rgba(17, 17, 17, 0.08);
+    --color-placeholder: rgba(17, 17, 17, 0.4);
+    --color-header-bg: rgba(255, 255, 255, 0.9);
+    --color-header-bg-blur: rgba(255, 255, 255, 0.65);
+    --color-drawer-bg: rgba(255, 255, 255, 0.98);
+    --color-overlay: rgba(0, 0, 0, 0.35);
+    --color-overlay-strong: rgba(0, 0, 0, 0.55);
+    --color-menu-hover: rgba(0, 0, 0, 0.06);
+    --color-carousel-border: #f4ab2d;
+    --color-image-badge-bg: rgba(255, 255, 255, 0.85);
+    --color-image-badge-text: #111111;
+    --color-button-primary-text: #111111;
+    --color-button-outline-border: rgba(17, 17, 17, 0.2);
+    --color-button-outline-hover: rgba(17, 17, 17, 0.06);
+    --color-tooltip-bg: rgba(255, 255, 255, 0.95);
+    --color-tooltip-text: #111111;
   }
 
   body {
     margin: 0;
     min-height: 100vh;
-    background: radial-gradient(circle at top left, rgba(255, 100, 100, 0.25), transparent 45%),
-      radial-gradient(circle at bottom right, rgba(255, 200, 80, 0.2), transparent 40%),
-      #050505;
-    color: var(--color-secondary);
-    background-color: var(--color-primary);
+    background: var(--body-background);
+    background-color: var(--color-page-bg);
+    color: var(--color-text-primary);
   }
 
   a {
@@ -30,6 +90,45 @@
 
   main {
     display: block;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--color-placeholder);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  @layer base {
+    :root:not([data-theme]) {
+      color-scheme: light;
+      --color-primary: #ffffff;
+      --color-secondary: #111111;
+      --body-background: #ffffff;
+      --color-page-bg: #ffffff;
+      --color-surface: rgba(17, 17, 17, 0.04);
+      --color-surface-strong: rgba(17, 17, 17, 0.08);
+      --color-text-primary: #111111;
+      --color-text-muted: rgba(17, 17, 17, 0.75);
+      --color-text-subtle: rgba(17, 17, 17, 0.6);
+      --color-text-soft: rgba(17, 17, 17, 0.4);
+      --color-border-default: rgba(17, 17, 17, 0.12);
+      --color-border-strong: rgba(17, 17, 17, 0.2);
+      --color-border-subtle: rgba(17, 17, 17, 0.08);
+      --color-placeholder: rgba(17, 17, 17, 0.4);
+      --color-header-bg: rgba(255, 255, 255, 0.9);
+      --color-header-bg-blur: rgba(255, 255, 255, 0.65);
+      --color-drawer-bg: rgba(255, 255, 255, 0.98);
+      --color-overlay: rgba(0, 0, 0, 0.35);
+      --color-overlay-strong: rgba(0, 0, 0, 0.55);
+      --color-menu-hover: rgba(0, 0, 0, 0.06);
+      --color-carousel-border: #f4ab2d;
+      --color-image-badge-bg: rgba(255, 255, 255, 0.85);
+      --color-image-badge-text: #111111;
+      --color-button-primary-text: #111111;
+      --color-button-outline-border: rgba(17, 17, 17, 0.2);
+      --color-button-outline-hover: rgba(17, 17, 17, 0.06);
+    }
   }
 }
 
@@ -44,3 +143,64 @@
     overflow-x: hidden;
   }
 }
+
+@layer utilities {
+  .text-theme-primary {
+    color: var(--color-text-primary);
+  }
+
+  .text-theme-muted {
+    color: var(--color-text-muted);
+  }
+
+  .text-theme-subtle {
+    color: var(--color-text-subtle);
+  }
+
+  .text-theme-soft {
+    color: var(--color-text-soft);
+  }
+
+  .bg-theme-page {
+    background-color: var(--color-page-bg);
+  }
+
+  .bg-theme-surface {
+    background-color: var(--color-surface);
+  }
+
+  .bg-theme-surface-strong {
+    background-color: var(--color-surface-strong);
+  }
+
+  .bg-theme-overlay {
+    background-color: var(--color-overlay);
+  }
+
+  .bg-theme-overlay-strong {
+    background-color: var(--color-overlay-strong);
+  }
+
+  .bg-theme-header {
+    background-color: var(--color-header-bg);
+  }
+
+  .bg-theme-drawer {
+    background-color: var(--color-drawer-bg);
+  }
+
+  .border-theme {
+    border-color: var(--color-border-default);
+  }
+
+  .border-theme-strong {
+    border-color: var(--color-border-strong);
+  }
+
+  .border-theme-subtle {
+    border-color: var(--color-border-subtle);
+  }
+}
+
+
+

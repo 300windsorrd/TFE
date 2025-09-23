@@ -16,13 +16,12 @@ export function TabsList({ children }: { children: React.ReactNode }) {
 export function TabsTrigger({ value, children }: { value: string; children: React.ReactNode }) {
   const ctx = React.useContext(Ctx)!;
   const active = ctx.value === value;
+  const base = 'tfe-focus-ring rounded-md border px-3 py-1 text-sm text-theme-primary transition-colors';
+  const variant = active
+    ? 'border-[color:var(--color-button-outline-border)] bg-[color:var(--color-button-outline-hover)]'
+    : 'border-[color:var(--color-border-default)] hover:bg-[color:var(--color-menu-hover)]';
   return (
-    <button
-      className={`tfe-focus-ring rounded-md border px-3 py-1 text-sm ${
-        active ? 'border-white bg-white/10' : 'border-white/20 hover:bg-white/5'
-      }`}
-      onClick={() => ctx.setValue(value)}
-    >
+    <button className={`${base} ${variant}`} onClick={() => ctx.setValue(value)}>
       {children}
     </button>
   );

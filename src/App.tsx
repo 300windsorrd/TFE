@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import TheseFreakinEmpanadas, { type HeroImage, type MenuItem } from "./lib";
 import { MenuJSONLD } from "./lib/seo";
 import heroImagesRaw from "./data/hero.json";
@@ -21,6 +21,34 @@ function normalizeMenu(data: unknown): MenuItem[] {
 }
 
 export default function App() {
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mql = window.matchMedia("(prefers-color-scheme: light)");
+    const root = document.documentElement;
+
+    const apply = (isLight: boolean) => {
+      const theme = isLight ? "light" : "dark";
+      root.dataset.theme = theme;
+      root.style.setProperty("color-scheme", theme);
+    };
+
+    apply(mql.matches);
+
+    const listener = (event: MediaQueryListEvent) => apply(event.matches);
+
+    if (typeof mql.addEventListener === "function") {
+      mql.addEventListener("change", listener);
+      return () => {
+        mql.removeEventListener("change", listener);
+      };
+    }
+
+    mql.addListener(listener);
+    return () => {
+      mql.removeListener(listener);
+    };
+  }, []);
+
   const menuItems = useMemo(() => normalizeMenu(menuDataRaw), []);
   const sections = useMemo(() => {
     const byCategory: Record<string, MenuItem[]> = {};

@@ -17,9 +17,10 @@ export function MenuItemImage({ src, alt, className, variant = 'thumb', ...props
       alt={alt}
       loading="lazy"
       decoding="async"
-      className={cn(size, 'rounded-md border border-white/20', className)}
+      className={cn(size, 'rounded-md border border-theme-strong', className)}
       onError={() => setErrored(true)}
       {...props}
     />
   );
 }
+

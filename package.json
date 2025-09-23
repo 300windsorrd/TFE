@@ -16,7 +16,8 @@
   "dependencies": {
     "framer-motion": "^12.23.18",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "three": "^0.180.0"
   },
   "devDependencies": {
     "@types/react": "^19.1.13",

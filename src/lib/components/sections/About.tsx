@@ -7,7 +7,7 @@ export function About({ address, phone, hours }: Props) {
   return (
     <section id="about" className="mx-auto max-w-6xl px-4 py-8">
       <h2 className="mb-2 text-2xl font-semibold">About</h2>
-      <p className="mb-4 max-w-2xl text-white/80">
+      <p className="mb-4 max-w-2xl text-theme-muted">
         From food-truck favorite to Wood-Ridge’s brick-and-mortar empanada hub.
       </p>
       <div className="space-y-1 text-sm">
@@ -20,9 +20,10 @@ export function About({ address, phone, hours }: Props) {
         <div>
           <strong>Hours:</strong> {hours}
         </div>
-        <div className="text-xs text-white/70">Service: takeout, delivery, pop-ups</div>
+        <div className="text-xs text-theme-subtle">Service: takeout, delivery, pop-ups</div>
       </div>
     </section>
   );
 }
+
 

@@ -71,7 +71,7 @@ export default function TheseFreakinEmpanadas({
     };
   }, [itemsProp]);
 
-  const rootClassName = cn('flex min-h-screen flex-col bg-[#050505] text-white', className);
+  const rootClassName = cn('flex min-h-screen flex-col bg-theme-page text-theme-primary', className);
 
   return (
     <div className={rootClassName}>
@@ -93,3 +93,4 @@ export default function TheseFreakinEmpanadas({
     </div>
   );
 }
+

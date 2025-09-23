@@ -27,7 +27,7 @@ export function FeaturedMenu({ items }: { items: MenuItem[] }) {
             {list.map((item) => (
               <Card key={item.id}>
                 <div className="relative">
-                  <div className="relative h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80 overflow-hidden rounded-md border border-white/20">
+                  <div className="relative h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80 overflow-hidden rounded-md border border-theme-strong">
                     {item.image ? (
                       <MenuItemImage
                         src={item.image}
@@ -36,10 +36,10 @@ export function FeaturedMenu({ items }: { items: MenuItem[] }) {
                         className="h-full w-full object-cover"
                       />
                     ) : (
-                      <div className="h-full w-full bg-white/[0.06]" />
+                      <div className="h-full w-full bg-theme-surface" />
                     )}
                     {/* Price top-left */}
-                    <div className="absolute left-2 top-2 rounded bg-black/60 px-2 py-1 text-xs font-medium text-white">
+                    <div className="absolute left-2 top-2 rounded bg-[color:var(--color-image-badge-bg)] px-2 py-1 text-xs font-medium text-[color:var(--color-image-badge-text)]">
                       {(() => {
                         const prices = [item.prices?.doordash, item.prices?.grubhub].filter(
                           (n): n is number => typeof n === 'number'
@@ -49,7 +49,7 @@ export function FeaturedMenu({ items }: { items: MenuItem[] }) {
                       })()}
                     </div>
                     {/* Name bottom-right */}
-                    <div className="absolute bottom-2 right-2 max-w-[80%] truncate rounded bg-black/60 px-2 py-1 text-sm font-semibold text-white shadow">
+                    <div className="absolute bottom-2 right-2 max-w-[80%] truncate rounded bg-[color:var(--color-image-badge-bg)] px-2 py-1 text-sm font-semibold text-[color:var(--color-image-badge-text)] shadow">
                       {item.name}
                     </div>
                   </div>
@@ -62,3 +62,4 @@ export function FeaturedMenu({ items }: { items: MenuItem[] }) {
     </section>
   );
 }
+

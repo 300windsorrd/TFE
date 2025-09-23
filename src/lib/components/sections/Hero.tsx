@@ -19,7 +19,7 @@ export function Hero({ images, doordashUrl, grubhubUrl }: Props) {
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
           <TextType
             as="h1"
-            className="text-3xl font-semibold md:text-5xl"
+            className="text-3xl font-semibold text-white md:text-5xl"
             text={"Bold, Crispy, Freakin’ Delicious."}
             typingSpeed={45}
             initialDelay={200}
@@ -45,10 +45,13 @@ export function Hero({ images, doordashUrl, grubhubUrl }: Props) {
             </a>
           </div>
           <a href="#menu">
-            <Button variant="outline">View Menu</Button>
+            <Button variant="outline" className="!text-white !border-white/30 hover:!bg-white/10">View Menu</Button>
           </a>
         </div>
       </div>
     </section>
   );
 }
+
+
+

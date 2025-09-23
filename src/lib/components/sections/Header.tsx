@@ -2,6 +2,15 @@ import * as React from 'react';
 import { Button } from '../ui/Button';
 import { VariableProximity } from '../animations/VariableProximity';
 
+const NAV_LINKS = [
+  { href: '#menu', label: 'Menu' },
+  { href: '#about', label: 'About' },
+  { href: '#reviews', label: 'Reviews' },
+  { href: '#contact', label: 'Contact' },
+] as const;
+
+const VARIABLE_FONT_STACK = "var(--font-source), var(--font-lato), system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif";
+
 type Props = {
   restaurantName: string;
   doordashUrl: string;
@@ -12,6 +21,8 @@ export function Header({ restaurantName, doordashUrl, grubhubUrl }: Props) {
   const [open, setOpen] = React.useState(false);
   const [show, setShow] = React.useState(false); // mount drawer only when true
   const brandContainerRef = React.useRef<HTMLAnchorElement | null>(null);
+  const navContainerRef = React.useRef<HTMLElement | null>(null);
+  const mobileNavContainerRef = React.useRef<HTMLElement | null>(null);
 
   const closeMenu = React.useCallback(() => {
     setOpen(false);
@@ -46,7 +57,7 @@ export function Header({ restaurantName, doordashUrl, grubhubUrl }: Props) {
   }, [open]);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-white/10 bg-black/70 backdrop-blur supports-[backdrop-filter]:bg-black/40">
+    <header className="sticky top-0 z-40 border-b border-theme bg-theme-header backdrop-blur supports-[backdrop-filter]:bg-[color:var(--color-header-bg-blur)]">
       <div className="relative mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
         <a ref={brandContainerRef} href="/" className="flex items-center gap-3">
           <img
@@ -64,27 +75,28 @@ export function Header({ restaurantName, doordashUrl, grubhubUrl }: Props) {
             radius={80}
             falloff="exponential"
             style={{
-              fontFamily:
-                "var(--font-source), var(--font-lato), system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif",
+              fontFamily: VARIABLE_FONT_STACK,
             }}
             aria-label={restaurantName}
           />
         </a>
 
         {/* Desktop nav */}
-        <nav className="hidden gap-6 md:flex">
-          <a href="#menu" className="hover:underline">
-            Menu
-          </a>
-          <a href="#about" className="hover:underline">
-            About
-          </a>
-          <a href="#reviews" className="hover:underline">
-            Reviews
-          </a>
-          <a href="#contact" className="hover:underline">
-            Contact
-          </a>
+        <nav ref={navContainerRef} className="hidden items-center gap-6 md:flex">
+          {NAV_LINKS.map(({ href, label }) => (
+            <a key={href} href={href} className="hover:underline">
+              <VariableProximity
+                className="text-sm uppercase tracking-[0.15em] text-theme-primary/90 transition-colors duration-200"
+                label={label}
+                containerRef={navContainerRef}
+                fromFontVariationSettings="'wght' 450"
+                toFontVariationSettings="'wght' 800"
+                radius={72}
+                falloff="exponential"
+                style={{ fontFamily: VARIABLE_FONT_STACK }}
+              />
+            </a>
+          ))}
         </nav>
 
         {/* Desktop order buttons */}
@@ -107,11 +119,11 @@ export function Header({ restaurantName, doordashUrl, grubhubUrl }: Props) {
           aria-label={open ? 'Close menu' : 'Open menu'}
           aria-expanded={open}
           aria-controls="mobile-menu"
-          className="tfe-focus-ring md:hidden inline-flex h-10 w-10 items-center justify-center rounded-md border border-white/15 bg-white/5 hover:bg-white/10"
+          className="tfe-focus-ring md:hidden inline-flex h-10 w-10 items-center justify-center rounded-md border border-[color:var(--color-border-subtle)] bg-theme-surface hover:bg-[color:var(--color-menu-hover)]"
           onClick={() => (open ? closeMenu() : openMenu())}
         >
           <svg
-            className="h-5 w-5 text-white"
+            className="h-5 w-5 text-theme-primary"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -137,7 +149,7 @@ export function Header({ restaurantName, doordashUrl, grubhubUrl }: Props) {
         {show && (
           <div className="fixed inset-0 z-50 md:hidden" aria-hidden={!open}>
             <div
-              className={`absolute inset-0 bg-black/50 transition-opacity ${open ? 'opacity-100' : 'opacity-0'}`}
+              className={`absolute inset-0 bg-theme-overlay transition-opacity ${open ? 'opacity-100' : 'opacity-0'}`}
               onClick={closeMenu}
             />
             <div
@@ -145,17 +157,17 @@ export function Header({ restaurantName, doordashUrl, grubhubUrl }: Props) {
               role="dialog"
               aria-modal="true"
               aria-label="Mobile menu"
-              className={`absolute right-0 top-0 h-full w-72 max-w-[80%] border-l border-white/10 bg-black/95 p-4 shadow-xl backdrop-blur transition-transform duration-300 ease-out ${open ? 'translate-x-0' : 'translate-x-full'}`}
+              className={`absolute right-0 top-0 h-full w-72 max-w-[80%] border-l border-theme bg-theme-drawer p-4 shadow-xl backdrop-blur transition-transform duration-300 ease-out ${open ? 'translate-x-0' : 'translate-x-full'}`}
             >
               <div className="flex items-center justify-end">
                 <button
                   type="button"
                   aria-label="Close menu"
-                  className="tfe-focus-ring inline-flex h-9 w-9 items-center justify-center rounded-md border border-white/15 bg-white/5 hover:bg-white/10"
+                  className="tfe-focus-ring inline-flex h-9 w-9 items-center justify-center rounded-md border border-[color:var(--color-border-subtle)] bg-theme-surface hover:bg-[color:var(--color-menu-hover)]"
                   onClick={closeMenu}
                 >
                   <svg
-                    className="h-5 w-5 text-white"
+                    className="h-5 w-5 text-theme-primary"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -167,35 +179,26 @@ export function Header({ restaurantName, doordashUrl, grubhubUrl }: Props) {
                   </svg>
                 </button>
               </div>
-              <nav className="mt-3 grid gap-1">
-                <a
-                  href="#menu"
-                  className="block rounded px-3 py-2 hover:bg-white/10"
-                  onClick={closeMenu}
-                >
-                  Menu
-                </a>
-                <a
-                  href="#about"
-                  className="block rounded px-3 py-2 hover:bg-white/10"
-                  onClick={closeMenu}
-                >
-                  About
-                </a>
-                <a
-                  href="#reviews"
-                  className="block rounded px-3 py-2 hover:bg-white/10"
-                  onClick={closeMenu}
-                >
-                  Reviews
-                </a>
-                <a
-                  href="#contact"
-                  className="block rounded px-3 py-2 hover:bg-white/10"
-                  onClick={closeMenu}
-                >
-                  Contact
-                </a>
+              <nav ref={mobileNavContainerRef} className="mt-3 grid gap-1">
+                {NAV_LINKS.map(({ href, label }) => (
+                  <a
+                    key={href}
+                    href={href}
+                    className="block rounded px-3 py-2 hover:bg-[color:var(--color-menu-hover)]"
+                    onClick={closeMenu}
+                  >
+                    <VariableProximity
+                      className="text-base font-semibold tracking-[0.1em] text-theme-primary"
+                      label={label}
+                      containerRef={mobileNavContainerRef}
+                      fromFontVariationSettings="'wght' 450"
+                      toFontVariationSettings="'wght' 800"
+                      radius={64}
+                      falloff="exponential"
+                      style={{ fontFamily: VARIABLE_FONT_STACK }}
+                    />
+                  </a>
+                ))}
               </nav>
               <div className="mt-4 grid grid-cols-2 gap-2">
                 <a href={doordashUrl} target="_blank" rel="noreferrer" onClick={closeMenu}>
@@ -216,3 +219,4 @@ export function Header({ restaurantName, doordashUrl, grubhubUrl }: Props) {
     </header>
   );
 }
+
