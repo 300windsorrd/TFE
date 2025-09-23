@@ -3,6 +3,7 @@ import TheseFreakinEmpanadas, { type HeroImage, type MenuItem } from "./lib";
 import { MenuJSONLD } from "./lib/seo";
 import heroImagesRaw from "./data/hero.json";
 import menuDataRaw from "./data/menu.json";
+import LiquidEther from "./backgrounds/LiquidEther";
 
 type RawMenuItem = MenuItem & {
   pricesJson?: string;
@@ -60,8 +61,16 @@ export default function App() {
   }, [menuItems]);
 
   return (
-    <div className="tfe-page">
-      <TheseFreakinEmpanadas heroImages={heroImagesRaw as HeroImage[]} items={menuItems} />
+    <div className="tfe-page relative">
+      <LiquidEther
+        className="pointer-events-none"
+        style={{ position: "fixed", top: 0, right: 0, bottom: 0, left: 0, width: "100vw", height: "100vh", zIndex: 0 }}
+      />
+      <TheseFreakinEmpanadas
+        heroImages={heroImagesRaw as HeroImage[]}
+        items={menuItems}
+        className="relative z-10 bg-transparent"
+      />
       <MenuJSONLD sections={sections} />
     </div>
   );
