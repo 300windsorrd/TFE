@@ -68,7 +68,7 @@ export function Header({ restaurantName, doordashUrl, grubhubUrl }: Props) {
           <VariableProximity
             className="text-lg hidden sm:inline"
             label={restaurantName}
-            containerRef={brandContainerRef}
+            containerRef={brandContainerRef as React.RefObject<HTMLElement | null>}
             // Use variable font axis available in Source Sans 3 (loaded globally)
             fromFontVariationSettings="'wght' 400"
             toFontVariationSettings="'wght' 900"
@@ -85,10 +85,10 @@ export function Header({ restaurantName, doordashUrl, grubhubUrl }: Props) {
         <nav ref={navContainerRef} className="hidden items-center gap-6 md:flex">
           {NAV_LINKS.map(({ href, label }) => (
             <a key={href} href={href} className="hover:underline">
-              <VariableProximity
+                <VariableProximity
                 className="text-sm uppercase tracking-[0.15em] text-theme-primary/90 transition-colors duration-200"
                 label={label}
-                containerRef={navContainerRef}
+                  containerRef={navContainerRef}
                 fromFontVariationSettings="'wght' 450"
                 toFontVariationSettings="'wght' 800"
                 radius={72}

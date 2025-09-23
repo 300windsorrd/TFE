@@ -65,6 +65,17 @@ export default function App() {
       <LiquidEther
         className="pointer-events-none"
         style={{ position: "fixed", top: 0, right: 0, bottom: 0, left: 0, width: "100vw", height: "100vh", zIndex: 0 }}
+  mouseForce={18}
+  cursorSize={90}
+        resolution={0.5}
+        autoSpeed={0.25}
+  autoIntensity={2.5}
+        iterationsPoisson={16}
+        isBounce={true}
+        autoDemo={true}
+        isViscous={false}
+        viscous={63}
+        iterationsViscous={17}
       />
       <TheseFreakinEmpanadas
         heroImages={heroImagesRaw as HeroImage[]}

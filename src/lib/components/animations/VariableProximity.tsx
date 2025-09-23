@@ -9,7 +9,9 @@ export interface VariableProximityProps
   label: string;
   fromFontVariationSettings: string; // e.g. "'wght' 400"
   toFontVariationSettings: string; // e.g. "'wght' 800"
-  containerRef: React.RefObject<HTMLElement>;
+  // Accept a nullable HTMLElement ref so callers can pass refs created
+  // with useRef<HTMLElement | null>(null).
+  containerRef: React.RefObject<HTMLElement | null>;
   radius?: number;
   falloff?: Falloff;
 }
@@ -26,7 +28,7 @@ function useAnimationFrame(callback: () => void) {
   }, [callback]);
 }
 
-function useMousePositionRef(containerRef: React.RefObject<HTMLElement>) {
+function useMousePositionRef(containerRef: React.RefObject<HTMLElement | null>) {
   const positionRef = useRef({ x: 0, y: 0 });
 
   useEffect(() => {

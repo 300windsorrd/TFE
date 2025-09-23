@@ -2,7 +2,9 @@
 
 import React, { createElement, useEffect, useMemo, useRef, useState } from "react";
 
-type ElementTag = keyof JSX.IntrinsicElements;
+// Use React.ElementType to avoid relying on the global JSX namespace in
+// environments where JSX typings may be missing or configured differently.
+type ElementTag = React.ElementType;
 
 export interface TextTypeProps extends React.HTMLAttributes<HTMLElement> {
   text: string | string[];
