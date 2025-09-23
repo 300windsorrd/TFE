@@ -39,7 +39,6 @@ jobs:
         run: |
           npm ci
           npm run build
-          npm run start
 
 # Please do not touch the following action
       - name: Store deployment content
@@ -53,3 +52,4 @@ jobs:
           folder: ${{ env.DEPLOYMENT_FOLDER }}
           config-file: .deploy-now/TFE/config.yaml
           action: upload
+
