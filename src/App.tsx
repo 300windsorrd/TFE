@@ -13,14 +13,15 @@ type RawMenuItem = MenuItem & {
 
 function normalizeMenu(data: unknown): MenuItem[] {
   if (!Array.isArray(data)) return [];
-  return (data as RawMenuItem[]).map((item) => ({
-    ...item,
-    prices: item.prices ?? (item.pricesJson ? JSON.parse(item.pricesJson) : undefined),
-    orderLinks: item.orderLinks ?? (item.orderLinksJson ? JSON.parse(item.orderLinksJson) : undefined),
-    tags: item.tags ?? (item.tagsJson ? JSON.parse(item.tagsJson) : undefined)
-  }));
+  return (data as RawMenuItem[])
+    .map((item) => ({
+      ...item,
+      prices: item.prices ?? (item.pricesJson ? JSON.parse(item.pricesJson) : undefined),
+      orderLinks: item.orderLinks ?? (item.orderLinksJson ? JSON.parse(item.orderLinksJson) : undefined),
+      tags: item.tags ?? (item.tagsJson ? JSON.parse(item.tagsJson) : undefined)
+    }))
+    .filter((item) => typeof item.image === "string" && item.image.trim().length > 0);
 }
-
 export default function App() {
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -86,3 +87,4 @@ export default function App() {
     </div>
   );
 }
+

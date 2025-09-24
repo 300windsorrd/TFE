@@ -27,7 +27,12 @@ const RippleGrid = ({
   const uniformsRef = useRef(null);
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    if (typeof document === 'undefined') return;
+
+    const container = document.createElement('div');
+    container.className = 'ripple-grid-container';
+    document.body.appendChild(container);
+    containerRef.current = container;
 
     const hexToRgb = (hex) => {
       const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -53,7 +58,7 @@ const RippleGrid = ({
     gl.canvas.style.top = '0';
     gl.canvas.style.left = '0';
     gl.canvas.style.pointerEvents = 'none';
-    containerRef.current.appendChild(gl.canvas);
+    container.appendChild(gl.canvas);
 
     const vert = `
 attribute vec2 position;
@@ -182,14 +187,14 @@ void main() {
     const mesh = new Mesh(gl, { geometry, program });
 
     const resize = () => {
-      const { clientWidth: w, clientHeight: h } = containerRef.current;
+      const { clientWidth: w, clientHeight: h } = container;
       renderer.setSize(w, h);
       uniforms.iResolution.value = [w, h];
     };
 
     const updatePointer = (clientX, clientY) => {
-      if (!mouseInteraction || !containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
+      if (!mouseInteraction) return;
+      const rect = container.getBoundingClientRect();
       const { width, height } = rect;
       if (width === 0 || height === 0) return;
 
@@ -279,7 +284,14 @@ void main() {
         window.removeEventListener('blur', handlePointerLeave);
       }
       renderer.gl.getExtension('WEBGL_lose_context')?.loseContext();
-      containerRef.current?.removeChild(gl.canvas);
+      if (gl.canvas.parentNode) {
+        gl.canvas.parentNode.removeChild(gl.canvas);
+      }
+      uniformsRef.current = null;
+      if (container.parentNode) {
+        container.parentNode.removeChild(container);
+      }
+      containerRef.current = null;
     };
   }, []);
 
@@ -324,7 +336,7 @@ void main() {
     mouseInteractionRadius,
   ]);
 
-  return <div ref={containerRef} className="ripple-grid-container" />;
+  return null;
 };
 
 export default RippleGrid;
