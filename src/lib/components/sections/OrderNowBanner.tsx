@@ -18,7 +18,7 @@ export function OrderNowBanner({ doordashUrl, grubhubUrl, linkTreeUrl, phone }: 
             </Button>
           </a>
           <a href={grubhubUrl} target="_blank" rel="noreferrer">
-            <Button variant="secondary">
+            <Button variant="secondary" className="border border-[color:rgba(255,127,1,0.55)]">
               <img src="/images/Grubhub.png" alt="Order on Grubhub" className="h-6 w-auto" />
             </Button>
           </a>

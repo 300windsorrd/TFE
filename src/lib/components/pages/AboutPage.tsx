@@ -287,7 +287,7 @@ export function AboutPage({
                     <Button variant="secondary" className="min-w-[160px]">Order on DoorDash</Button>
                   </a>
                   <a href={grubhubUrl} target="_blank" rel="noreferrer">
-                    <Button variant="outline" className="min-w-[160px]">Order on Grubhub</Button>
+                    <Button variant="outline" className="min-w-[160px] border-[color:rgba(255,127,1,0.55)]">Order on Grubhub</Button>
                   </a>
                   <a href={`tel:${restaurantPhone.replace(/[^\d+]/g, "")}`}>
                     <Button variant="outline" className="min-w-[160px]">Call Us</Button>

@@ -107,7 +107,7 @@ export function Header({ restaurantName, doordashUrl, grubhubUrl }: Props) {
             </Button>
           </a>
           <a href={grubhubUrl} target="_blank" rel="noreferrer">
-            <Button variant="secondary">
+            <Button variant="secondary" className="border border-[color:rgba(255,127,1,0.55)]">
               <img src="/images/Grubhub.png" alt="Order on Grubhub" className="h-6 w-auto" />
             </Button>
           </a>
@@ -207,7 +207,7 @@ export function Header({ restaurantName, doordashUrl, grubhubUrl }: Props) {
                   </Button>
                 </a>
                 <a href={grubhubUrl} target="_blank" rel="noreferrer" onClick={closeMenu}>
-                  <Button variant="secondary" className="w-full">
+                  <Button variant="secondary" className="w-full border border-[color:rgba(255,127,1,0.55)]">
                     <img src="/images/Grubhub.png" alt="Order on Grubhub" className="h-6 w-auto mx-auto" />
                   </Button>
                 </a>

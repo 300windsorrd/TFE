@@ -39,7 +39,7 @@ export function Hero({ images, doordashUrl, grubhubUrl }: Props) {
               </Button>
             </a>
             <a href={grubhubUrl} target="_blank" rel="noreferrer">
-              <Button variant="secondary" className="rounded-none border-l border-white/20">
+              <Button variant="secondary" className="rounded-none border border-[color:rgba(255,127,1,0.55)]">
                 <img src="/images/Grubhub.png" alt="Order on Grubhub" className="h-6 w-auto" />
               </Button>
             </a>

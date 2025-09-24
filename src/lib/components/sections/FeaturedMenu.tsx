@@ -150,7 +150,7 @@ export function FeaturedMenu({ items, doordashUrl, grubhubUrl }: FeaturedMenuPro
                                 >
                                   <Button
                                     variant="secondary"
-                                    className="h-11 w-full shadow-lg shadow-purple-500/20"
+                                    className="h-11 w-full border border-[color:rgba(255,127,1,0.55)] shadow-lg shadow-purple-500/20"
                                     aria-label={`Order ${item.name} on Grubhub`}
                                   >
                                     <span className="flex items-center justify-center gap-2">
