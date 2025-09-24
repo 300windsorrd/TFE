@@ -19,8 +19,8 @@ export function Hero({ images, doordashUrl, grubhubUrl }: Props) {
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
           <TextType
             as="h1"
-            className="text-3xl font-semibold text-white md:text-5xl"
-            text={"Bold, Crispy, Freakin’ Delicious."}
+            className="text-3xl font-semibold text-black transition-colors dark:text-white md:text-5xl md:text-white lg:text-6xl"
+            text={"Bold, Crispy, Freakin' Delicious."}
             typingSpeed={45}
             initialDelay={200}
             loop={false}
@@ -29,7 +29,7 @@ export function Hero({ images, doordashUrl, grubhubUrl }: Props) {
           />
         </motion.div>
         <motion.p className="max-w-xl text-white/80" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
-          Hand-held flavor bombs—savory & sweet empanadas, sandwiches, and sides.
+          Hand-held flavor bombs: savory & sweet empanadas, sandwiches, and sides.
         </motion.p>
         <div className="mt-2 flex flex-wrap gap-2">
           <div className="inline-flex overflow-hidden rounded-md border border-white/20">

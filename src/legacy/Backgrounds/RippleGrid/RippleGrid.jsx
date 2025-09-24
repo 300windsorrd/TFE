@@ -49,6 +49,10 @@ const RippleGrid = ({
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
     gl.canvas.style.width = '100%';
     gl.canvas.style.height = '100%';
+    gl.canvas.style.position = 'absolute';
+    gl.canvas.style.top = '0';
+    gl.canvas.style.left = '0';
+    gl.canvas.style.pointerEvents = 'none';
     containerRef.current.appendChild(gl.canvas);
 
     const vert = `
@@ -183,29 +187,54 @@ void main() {
       uniforms.iResolution.value = [w, h];
     };
 
-    const handleMouseMove = (e) => {
+    const updatePointer = (clientX, clientY) => {
       if (!mouseInteraction || !containerRef.current) return;
       const rect = containerRef.current.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width;
-      const y = 1.0 - (e.clientY - rect.top) / rect.height; // Flip Y coordinate
-      targetMouseRef.current = { x, y };
+      const { width, height } = rect;
+      if (width === 0 || height === 0) return;
+
+      const normalizedX = (clientX - rect.left) / width;
+      const normalizedY = 1.0 - (clientY - rect.top) / height;
+
+      const clampedX = Math.min(Math.max(normalizedX, 0), 1);
+      const clampedY = Math.min(Math.max(normalizedY, 0), 1);
+      targetMouseRef.current = { x: clampedX, y: clampedY };
+
+      const isInside = normalizedX >= 0 && normalizedX <= 1 && normalizedY >= 0 && normalizedY <= 1;
+      mouseInfluenceRef.current = isInside ? 1.0 : 0.0;
     };
 
-    const handleMouseEnter = () => {
+    const handlePointerMove = (event) => {
+      updatePointer(event.clientX, event.clientY);
+    };
+
+    const handleTouchMove = (event) => {
       if (!mouseInteraction) return;
-      mouseInfluenceRef.current = 1.0;
+      const touch = event.touches?.[0] ?? event.changedTouches?.[0];
+      if (!touch) return;
+      updatePointer(touch.clientX, touch.clientY);
     };
 
-    const handleMouseLeave = () => {
+    const handlePointerLeave = () => {
       if (!mouseInteraction) return;
       mouseInfluenceRef.current = 0.0;
     };
 
     window.addEventListener('resize', resize);
+    const supportsPointerEvents = typeof window !== 'undefined' && 'PointerEvent' in window;
+
     if (mouseInteraction) {
-      containerRef.current.addEventListener('mousemove', handleMouseMove);
-      containerRef.current.addEventListener('mouseenter', handleMouseEnter);
-      containerRef.current.addEventListener('mouseleave', handleMouseLeave);
+      if (supportsPointerEvents) {
+        window.addEventListener('pointermove', handlePointerMove, { passive: true });
+        window.addEventListener('pointerdown', handlePointerMove, { passive: true });
+        window.addEventListener('pointerleave', handlePointerLeave);
+      } else {
+        window.addEventListener('mousemove', handlePointerMove);
+        window.addEventListener('mousedown', handlePointerMove);
+        window.addEventListener('touchstart', handleTouchMove, { passive: true });
+        window.addEventListener('touchmove', handleTouchMove, { passive: true });
+      }
+      window.addEventListener('blur', handlePointerLeave);
     }
     resize();
 
@@ -236,16 +265,18 @@ void main() {
 
     return () => {
       window.removeEventListener('resize', resize);
-      if (mouseInteraction && containerRef.current) {
-        containerRef.current.removeEventListener('mousemove', handleMouseMove);
-        containerRef.current.removeEventListener(
-          'mouseenter',
-          handleMouseEnter
-        );
-        containerRef.current.removeEventListener(
-          'mouseleave',
-          handleMouseLeave
-        );
+      if (mouseInteraction) {
+        if (supportsPointerEvents) {
+          window.removeEventListener('pointermove', handlePointerMove);
+          window.removeEventListener('pointerdown', handlePointerMove);
+          window.removeEventListener('pointerleave', handlePointerLeave);
+        } else {
+          window.removeEventListener('mousemove', handlePointerMove);
+          window.removeEventListener('mousedown', handlePointerMove);
+          window.removeEventListener('touchstart', handleTouchMove);
+          window.removeEventListener('touchmove', handleTouchMove);
+        }
+        window.removeEventListener('blur', handlePointerLeave);
       }
       renderer.gl.getExtension('WEBGL_lose_context')?.loseContext();
       containerRef.current?.removeChild(gl.canvas);
@@ -297,3 +328,4 @@ void main() {
 };
 
 export default RippleGrid;
+

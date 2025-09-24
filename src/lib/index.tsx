@@ -30,8 +30,9 @@ import { OrderNowBanner } from './components/sections/OrderNowBanner';
 import { Footer } from './components/sections/Footer';
 import { cn } from './components/utils/cn';
 
-const DEFAULT_DD = 'https://www.doordash.com/store/these-freakin-empanadas-and-more-wood-ridge-34379601/?srsltid=AfmBOop7RQWjGGjS_ozZrRP0mAFSNaHmv2phAm0y5CY9PepFgB4OLzIp';
+const DEFAULT_DD = 'https://www.doordash.com/store/these-freakin-empanadas-and-more-wood-ridge-34379601/71715400/?srsltid=AfmBOop7RQWjGGjS_ozZrRP0mAFSNaHmv2phAm0y5CY9PepFgB4OLzIp';
 const DEFAULT_GH = 'https://www.grubhub.com/restaurant/these-freakin-empanadas-and-more-251-b-valley-blvd-wood-ridge/11509544';
+const DEFAULT_LINKTREE = 'https://linktr.ee/freakinempanadas';
 
 export default function TheseFreakinEmpanadas({
   restaurantName = 'These Freakin\u2019 Empanadas & More',
@@ -40,6 +41,7 @@ export default function TheseFreakinEmpanadas({
   restaurantHours = 'Tue\u2013Sat 11:00 AM\u20137:00 PM; Sun 11:00 AM\u20135:00 PM; Mon closed',
   doordashUrl = DEFAULT_DD,
   grubhubUrl = DEFAULT_GH,
+  linkTreeUrl = DEFAULT_LINKTREE,
   heroImages,
   className,
   items: itemsProp
@@ -78,7 +80,7 @@ export default function TheseFreakinEmpanadas({
       <Header restaurantName={restaurantName} doordashUrl={doordashUrl} grubhubUrl={grubhubUrl} />
       <main className="flex-1">
         <Hero images={images} doordashUrl={doordashUrl} grubhubUrl={grubhubUrl} />
-        <FeaturedMenu items={menuItems} />
+        <FeaturedMenu items={menuItems} doordashUrl={doordashUrl} grubhubUrl={grubhubUrl} />
         <About address={restaurantAddress} phone={restaurantPhone} hours={restaurantHours} />
         <Reviews
           reviews={[
@@ -87,10 +89,9 @@ export default function TheseFreakinEmpanadas({
             { author: 'Jenna C.', quote: 'Fast pickup and great service every time.' }
           ]}
         />
-        <OrderNowBanner doordashUrl={doordashUrl} grubhubUrl={grubhubUrl} phone={restaurantPhone} />
+        <OrderNowBanner doordashUrl={doordashUrl} grubhubUrl={grubhubUrl} linkTreeUrl={linkTreeUrl} phone={restaurantPhone} />
       </main>
       <Footer />
     </div>
   );
 }
-
