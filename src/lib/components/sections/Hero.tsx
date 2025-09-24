@@ -28,7 +28,7 @@ export function Hero({ images, doordashUrl, grubhubUrl }: Props) {
             hideCursorWhileTyping={false}
           />
         </motion.div>
-        <motion.p className="max-w-xl text-white/80" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
+        <motion.p className="max-w-xl text-black dark:text-white/80 md:text-white/80" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
           Hand-held flavor bombs: savory & sweet empanadas, sandwiches, and sides.
         </motion.p>
         <div className="mt-2 flex flex-wrap gap-2">
