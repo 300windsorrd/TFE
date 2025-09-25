@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Button } from '../ui/Button';
-import { VariableProximity } from '../animations/VariableProximity';
 
 const NAV_LINKS = [
   { href: '#menu', label: 'Menu' },
@@ -105,42 +104,31 @@ export function Header({ restaurantName, doordashUrl, grubhubUrl }: Props) {
       className="sticky top-0 z-50 w-full border-b border-theme bg-theme-header backdrop-blur supports-[backdrop-filter]:bg-[color:var(--color-header-bg-blur)] shadow-sm"
     >
       <div className="relative mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-        <a ref={brandContainerRef} href="/" className="flex items-center gap-3">
+          <a ref={brandContainerRef} href="/" className="flex items-center gap-3">
           <img
             src="/images/Logo.png"
             alt={`${restaurantName} logo`}
             className="h-8 w-auto"
           />
-          <VariableProximity
-            className="text-lg hidden sm:inline"
-            label={restaurantName}
-            containerRef={brandContainerRef as React.RefObject<HTMLElement | null>}
-            // Use variable font axis available in Source Sans 3 (loaded globally)
-            fromFontVariationSettings="'wght' 400"
-            toFontVariationSettings="'wght' 900"
-            radius={80}
-            falloff="exponential"
-            style={{
-              fontFamily: VARIABLE_FONT_STACK,
-            }}
+          <span
+            className="text-base sm:text-lg inline-block"
+            style={{ fontFamily: VARIABLE_FONT_STACK }}
             aria-label={restaurantName}
-          />
+          >
+            {restaurantName}
+          </span>
         </a>
 
         {/* Desktop nav */}
         <nav ref={navContainerRef} className="hidden items-center gap-6 md:flex">
           {NAV_LINKS.map(({ href, label }) => (
             <a key={href} href={href} className="hover:underline">
-                <VariableProximity
+              <span
                 className="text-sm uppercase tracking-[0.15em] text-theme-primary/90 transition-colors duration-200"
-                label={label}
-                  containerRef={navContainerRef}
-                fromFontVariationSettings="'wght' 450"
-                toFontVariationSettings="'wght' 800"
-                radius={72}
-                falloff="exponential"
                 style={{ fontFamily: VARIABLE_FONT_STACK }}
-              />
+              >
+                {label}
+              </span>
             </a>
           ))}
         </nav>
@@ -233,16 +221,12 @@ export function Header({ restaurantName, doordashUrl, grubhubUrl }: Props) {
                     className="block rounded px-3 py-2 text-black hover:bg-neutral-100"
                     onClick={closeMenu}
                   >
-                    <VariableProximity
+                    <span
                       className="text-base font-semibold tracking-[0.1em] text-black"
-                      label={label}
-                      containerRef={mobileNavContainerRef}
-                      fromFontVariationSettings="'wght' 450"
-                      toFontVariationSettings="'wght' 800"
-                      radius={64}
-                      falloff="exponential"
                       style={{ fontFamily: VARIABLE_FONT_STACK }}
-                    />
+                    >
+                      {label}
+                    </span>
                   </a>
                 ))}
               </nav>
