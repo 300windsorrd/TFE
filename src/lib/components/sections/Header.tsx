@@ -44,20 +44,8 @@ export function Header({ restaurantName, doordashUrl, grubhubUrl }: Props) {
     return () => window.removeEventListener('keydown', onKey);
   }, [closeMenu]);
 
-  React.useEffect(() => {
-    // Lock body scroll when drawer is open
-    if (open) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [open]);
-
   return (
-    <header className="sticky top-0 z-40 border-b border-theme bg-theme-header backdrop-blur supports-[backdrop-filter]:bg-[color:var(--color-header-bg-blur)]">
+    <header className="sticky top-0 z-50 w-full border-b border-theme bg-theme-header backdrop-blur supports-[backdrop-filter]:bg-[color:var(--color-header-bg-blur)] shadow-sm">
       <div className="relative mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
         <a ref={brandContainerRef} href="/" className="flex items-center gap-3">
           <img
@@ -157,17 +145,17 @@ export function Header({ restaurantName, doordashUrl, grubhubUrl }: Props) {
               role="dialog"
               aria-modal="true"
               aria-label="Mobile menu"
-              className={`absolute right-0 top-0 h-full w-72 max-w-[80%] border-l border-theme bg-theme-drawer p-4 shadow-xl backdrop-blur transition-transform duration-300 ease-out ${open ? 'translate-x-0' : 'translate-x-full'}`}
+              className={`absolute right-0 top-3 w-72 max-w-[80%] border-l border-theme bg-white p-5 text-black shadow-xl transition-transform duration-300 ease-out ${open ? 'translate-x-0' : 'translate-x-full'}`}
             >
               <div className="flex items-center justify-end">
                 <button
                   type="button"
                   aria-label="Close menu"
-                  className="tfe-focus-ring inline-flex h-9 w-9 items-center justify-center rounded-md border border-[color:var(--color-border-subtle)] bg-theme-surface hover:bg-[color:var(--color-menu-hover)]"
+                  className="tfe-focus-ring inline-flex h-9 w-9 items-center justify-center rounded-md border border-[color:var(--color-border-subtle)] bg-white text-black hover:bg-neutral-100"
                   onClick={closeMenu}
                 >
                   <svg
-                    className="h-5 w-5 text-theme-primary"
+                    className="h-5 w-5 text-black"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -184,11 +172,11 @@ export function Header({ restaurantName, doordashUrl, grubhubUrl }: Props) {
                   <a
                     key={href}
                     href={href}
-                    className="block rounded px-3 py-2 hover:bg-[color:var(--color-menu-hover)]"
+                    className="block rounded px-3 py-2 text-black hover:bg-neutral-100"
                     onClick={closeMenu}
                   >
                     <VariableProximity
-                      className="text-base font-semibold tracking-[0.1em] text-theme-primary"
+                      className="text-base font-semibold tracking-[0.1em] text-black"
                       label={label}
                       containerRef={mobileNavContainerRef}
                       fromFontVariationSettings="'wght' 450"

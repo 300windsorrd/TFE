@@ -200,7 +200,19 @@
   .border-theme-subtle {
     border-color: var(--color-border-subtle);
   }
+
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
 }
+
+
+
 
 
 

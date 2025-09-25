@@ -32,8 +32,12 @@ export type TheseFreakinEmpanadasProps = {
   restaurantHours?: string; // "Tue-Sat 11:00 AM-7:00 PM; Sun 11:00 AM-5:00 PM; Mon closed"
   grubhubUrl?: string; // default provided
   doordashUrl?: string; // default provided
+  googleReviewsUrl?: string; // default provided
   linkTreeUrl?: string; // default provided
   heroImages?: HeroImage[];
   customStyles?: CustomStyles;
   className?: string;
 };
+
+
+
