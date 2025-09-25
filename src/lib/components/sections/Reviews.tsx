@@ -2,6 +2,7 @@
 import { cn } from '../utils/cn';
 
 type ReviewScore = { label: string; score: string };
+
 type Review = {
   id: string;
   label: string;
@@ -44,38 +45,39 @@ function ReviewCard({ review }: { review: Review }) {
 
   return (
     <article className="relative flex w-[320px] shrink-0 snap-center flex-col gap-5 rounded-3xl border border-theme-subtle bg-theme-surface-strong p-7 text-theme-primary shadow-[0_12px_35px_rgba(0,0,0,0.35)] backdrop-blur">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2 text-sm">
-            <span
-              className="flex items-center gap-1"
-              aria-label={`${totalStars} star${totalStars > 1 ? 's' : ''} out of 5`}
-            >
-              {Array.from({ length: totalStars }).map((_, index) => (
-                <StarIcon key={index} className="h-4 w-4 text-[#f4ab2d]" />
-              ))}
-            </span>
-          </div>
-          {review.experiences.length > 0 ? (
-            <div className="mt-2 flex gap-2 overflow-x-auto text-[11px] uppercase tracking-wide text-theme-soft scrollbar-none">
-              {review.experiences.map((experience) => (
-                <span key={experience} className="rounded-full border border-theme-subtle/70 bg-theme-surface px-3 py-[5px] whitespace-nowrap">
-                  {experience}
-                </span>
-              ))}
-            </div>
-          ) : null}
-        </div>
+      <div className="flex flex-col gap-3">
         <span
           className={cn(
-            'rounded-full border px-3 py-1 text-[11px] font-medium uppercase tracking-wide whitespace-nowrap',
+            'inline-flex w-fit rounded-full border px-3 py-1 text-[11px] font-medium uppercase tracking-wide whitespace-nowrap',
             review.isNew
-              ? 'border-[color:var(--color-accent)]/30 bg-[color:var(--color-accent)]/20 text-[color:var(--color-accent)]'
+              ? 'border-[color:var(--color-brandRed)]/40 bg-[color:var(--color-brandRed)]/15 text-[color:var(--color-brandRed)]'
               : 'border-theme-subtle bg-theme-surface text-theme-subtle'
           )}
         >
           {timeframeText}
         </span>
+        <div className="flex items-center gap-3 text-base">
+          <span
+            className="flex items-center gap-1"
+            aria-label={`${totalStars} star${totalStars > 1 ? 's' : ''} out of 5`}
+          >
+            {Array.from({ length: totalStars }).map((_, index) => (
+              <StarIcon key={index} className="h-5 w-5 text-[#f4ab2d]" />
+            ))}
+          </span>
+        </div>
+        {review.experiences.length > 0 ? (
+          <div className="mt-4 flex gap-2 overflow-x-auto text-[11px] uppercase tracking-wide text-theme-soft scrollbar-none">
+            {review.experiences.map((experience) => (
+              <span
+                key={experience}
+                className="rounded-full border border-theme-subtle/70 bg-theme-surface px-3 py-[5px] whitespace-nowrap"
+              >
+                {experience}
+              </span>
+            ))}
+          </div>
+        ) : null}
       </div>
       <p className="text-sm leading-relaxed text-theme-muted">"{review.quote}"</p>
       <div className="flex flex-wrap gap-2 text-[11px]">
@@ -98,6 +100,7 @@ export function Reviews({ reviews, doordashUrl, grubhubUrl, googleReviewsUrl, re
 
   const structuredData = React.useMemo<Record<string, unknown> | null>(() => {
     if (!reviews.length) return null;
+
     const averageRating = reviews.reduce((total, review) => total + review.rating, 0) / reviews.length;
     const reviewEntries = reviews.map((review, index) => {
       const authorName = review.label.includes('|') ? review.label.split('|')[0].trim() : review.label.trim();
@@ -191,33 +194,20 @@ export function Reviews({ reviews, doordashUrl, grubhubUrl, googleReviewsUrl, re
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
             <p className="text-sm font-semibold text-theme-primary">Catch the hype while it is fresh</p>
-            <p className="text-xs text-theme-soft">Order delivery right now or read every Google review before you decide.</p>
+            <p className="text-xs text-theme-soft">Find us on Google Maps — see location and get directions.</p>
           </div>
-          <div className="flex flex-wrap gap-2">
-            <a
-              href={doordashUrl}
-              className="tfe-focus-ring inline-flex items-center justify-center rounded-full bg-[color:var(--color-brandRed)] px-4 py-2 text-sm font-semibold text-[color:var(--color-button-primary-text)] transition hover:brightness-110"
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              Order on DoorDash
-            </a>
-            <a
-              href={grubhubUrl}
-              className="tfe-focus-ring inline-flex items-center justify-center rounded-full border border-theme-subtle bg-theme-surface px-4 py-2 text-sm font-semibold text-theme-primary transition hover:border-[color:var(--color-accent)]/40"
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              Order on Grubhub
-            </a>
-            <a
-              href={googleReviewsUrl}
-              className="tfe-focus-ring inline-flex items-center justify-center rounded-full border border-theme-subtle px-4 py-2 text-sm font-semibold text-theme-muted transition hover:text-theme-primary"
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              See Google Reviews
-            </a>
+          <div className="w-full md:w-[360px]">
+            <div className="overflow-hidden rounded-lg border border-theme-subtle">
+              <iframe
+                title="These Freakin Empanadas & More - location"
+                src="https://www.google.com/maps?q=251-B+Valley+Blvd,+Wood-Ridge,+NJ+07075&hl=en&z=17&output=embed"
+                width="100%"
+                height="240"
+                style={{ border: 0 }}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -230,4 +220,3 @@ export function Reviews({ reviews, doordashUrl, grubhubUrl, googleReviewsUrl, re
 }
 
 export type { Review };
-

@@ -20,6 +20,8 @@ type Props = {
 export function Header({ restaurantName, doordashUrl, grubhubUrl }: Props) {
   const [open, setOpen] = React.useState(false);
   const [show, setShow] = React.useState(false); // mount drawer only when true
+  const headerRef = React.useRef<HTMLElement | null>(null);
+  const fallbackStateRef = React.useRef<{ applied: boolean; updatePadding?: () => void }>({ applied: false });
   const brandContainerRef = React.useRef<HTMLAnchorElement | null>(null);
   const navContainerRef = React.useRef<HTMLElement | null>(null);
   const mobileNavContainerRef = React.useRef<HTMLElement | null>(null);
@@ -44,8 +46,64 @@ export function Header({ restaurantName, doordashUrl, grubhubUrl }: Props) {
     return () => window.removeEventListener('keydown', onKey);
   }, [closeMenu]);
 
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const supportsSticky = () => {
+      if (typeof CSS === 'undefined' || typeof CSS.supports !== 'function') {
+        return true;
+      }
+      return CSS.supports('position', 'sticky') || CSS.supports('position', '-webkit-sticky');
+    };
+
+    if (supportsSticky()) return;
+
+    const node = headerRef.current;
+    if (!node) return;
+
+    const previousBodyPaddingTop = document.body.style.paddingTop;
+
+    const syncBodyPadding = () => {
+      document.body.style.paddingTop = `${node.getBoundingClientRect().height}px`;
+    };
+
+    fallbackStateRef.current.applied = true;
+    fallbackStateRef.current.updatePadding = syncBodyPadding;
+
+    node.style.position = 'fixed';
+    node.style.top = '0';
+    node.style.left = '0';
+    node.style.right = '0';
+    node.style.width = '100%';
+    node.style.zIndex = '50';
+
+    syncBodyPadding();
+    window.addEventListener('resize', syncBodyPadding);
+
+    return () => {
+      window.removeEventListener('resize', syncBodyPadding);
+      document.body.style.paddingTop = previousBodyPaddingTop;
+      node.style.position = '';
+      node.style.top = '';
+      node.style.left = '';
+      node.style.right = '';
+      node.style.width = '';
+      node.style.zIndex = '';
+      fallbackStateRef.current.applied = false;
+      fallbackStateRef.current.updatePadding = undefined;
+    };
+  }, []);
+
+  React.useEffect(() => {
+    if (!fallbackStateRef.current.applied || !fallbackStateRef.current.updatePadding) return;
+    fallbackStateRef.current.updatePadding();
+  }, [open, show]);
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-theme bg-theme-header backdrop-blur supports-[backdrop-filter]:bg-[color:var(--color-header-bg-blur)] shadow-sm">
+    <header
+      ref={headerRef}
+      className="sticky top-0 z-50 w-full border-b border-theme bg-theme-header backdrop-blur supports-[backdrop-filter]:bg-[color:var(--color-header-bg-blur)] shadow-sm"
+    >
       <div className="relative mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
         <a ref={brandContainerRef} href="/" className="flex items-center gap-3">
           <img
