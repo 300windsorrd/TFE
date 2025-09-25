@@ -198,15 +198,40 @@ export function Reviews({ reviews, doordashUrl, grubhubUrl, googleReviewsUrl, re
           </div>
           <div className="w-full md:w-[360px]">
             <div className="overflow-hidden rounded-lg border border-theme-subtle">
-              <iframe
-                title="These Freakin Empanadas & More - location"
-                src="https://www.google.com/maps?q=251-B+Valley+Blvd,+Wood-Ridge,+NJ+07075&hl=en&z=17&output=embed"
-                width="100%"
-                height="240"
-                style={{ border: 0 }}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
+                <iframe
+                  title="These Freakin Empanadas & More - location"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3017.9522172484376!2d-74.08775412414981!3d40.85097287137303!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2f93a75b98675%3A0xb73dcf76169203ca!2sThese%20Freakin%20Empanadas%20and%20More!5e0!3m2!1sen!2sus!4v1758769069470!5m2!1sen!2sus"
+                  width="100%"
+                  height="450"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+            </div>
+            <div className="mt-3 text-right">
+              {/* Link directly to the short Google Maps app URL as requested */}
+              <a
+                href="https://maps.app.goo.gl/X4YLw36VTpD24cbv6"
+                target="_blank"
+                rel="noreferrer noopener"
+                aria-label="Open in Google Maps (opens in a new tab)"
+                title="Open in Google Maps (opens in a new tab)"
+                className="tfe-focus-ring inline-flex items-center justify-center rounded-full border border-theme-subtle px-4 py-2 text-sm font-semibold text-theme-primary transition hover:border-[color:var(--color-accent)]/40"
+              >
+                <span>Open in Google Maps</span>
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="ml-2 h-4 w-4 text-theme-muted"
+                >
+                  <path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z" />
+                  <path d="M5 5h6v2H7v10h10v-4h2v6H5V5z" />
+                </svg>
+                <span className="sr-only">(opens in a new tab)</span>
+              </a>
             </div>
           </div>
         </div>
