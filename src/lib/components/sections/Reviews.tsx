@@ -174,7 +174,6 @@ export function Reviews({ reviews, doordashUrl, grubhubUrl, ubereatsUrl, googleR
         </div>
         <div className="flex items-center gap-2 text-[11px] uppercase tracking-wide text-theme-soft">
           <span className="rounded-full border border-theme-subtle bg-theme-surface px-3 py-1">Verified</span>
-          <span className="rounded-full border border-theme-subtle bg-theme-surface px-3 py-1">No AI edits</span>
         </div>
       </div>
 
