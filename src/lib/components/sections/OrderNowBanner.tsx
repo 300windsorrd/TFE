@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Button } from '../ui/Button';
 
-type Props = { doordashUrl: string; grubhubUrl: string; linkTreeUrl: string; phone: string };
+type Props = { doordashUrl: string; grubhubUrl: string; ubereatsUrl?: string; linkTreeUrl: string; phone: string };
 
-export function OrderNowBanner({ doordashUrl, grubhubUrl, linkTreeUrl, phone }: Props) {
+export function OrderNowBanner({ doordashUrl, grubhubUrl, ubereatsUrl, linkTreeUrl, phone }: Props) {
   return (
     <section className="mx-auto max-w-6xl px-4 py-8">
       <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-theme bg-theme-surface p-4">
@@ -17,6 +17,13 @@ export function OrderNowBanner({ doordashUrl, grubhubUrl, linkTreeUrl, phone }: 
               <img src="/images/DoorDash.png" alt="Order on DoorDash" className="h-6 w-auto scale-125" />
             </Button>
           </a>
+          {ubereatsUrl ? (
+            <a href={ubereatsUrl} target="_blank" rel="noreferrer">
+              <Button variant="ubereats" className="border border-[color:rgba(6,193,127,0.4)]">
+                <img src="/images/UberEats.png" alt="Order on Uber Eats" className="h-6 w-auto" />
+              </Button>
+            </a>
+          ) : null}
           <a href={grubhubUrl} target="_blank" rel="noreferrer">
             <Button variant="secondary" className="border border-[color:rgba(255,127,1,0.55)]">
               <img src="/images/Grubhub.png" alt="Order on Grubhub" className="h-6 w-auto" />

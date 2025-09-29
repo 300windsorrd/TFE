@@ -9,9 +9,10 @@ type Props = {
   images: HeroImage[];
   doordashUrl: string;
   grubhubUrl: string;
+  ubereatsUrl?: string;
 };
 
-export function Hero({ images, doordashUrl, grubhubUrl }: Props) {
+export function Hero({ images, doordashUrl, grubhubUrl, ubereatsUrl }: Props) {
   return (
     <section className="relative mx-auto max-w-6xl px-4 pt-6">
       <HeroCarousel images={images} />
@@ -38,6 +39,13 @@ export function Hero({ images, doordashUrl, grubhubUrl }: Props) {
                 <img src="/images/DoorDash.png" alt="Order on DoorDash" className="h-6 w-auto scale-125" />
               </Button>
             </a>
+            {ubereatsUrl ? (
+              <a href={ubereatsUrl} target="_blank" rel="noreferrer">
+                <Button variant="ubereats" className="rounded-none border border-[#06c167]/40">
+                  <img src="/images/UberEats.png" alt="Order on Uber Eats" className="h-6 w-auto" />
+                </Button>
+              </a>
+            ) : null}
             <a href={grubhubUrl} target="_blank" rel="noreferrer">
               <Button variant="secondary" className="rounded-none border border-[color:rgba(255,127,1,0.55)]">
                 <img src="/images/Grubhub.png" alt="Order on Grubhub" className="h-6 w-auto" />
@@ -52,6 +60,7 @@ export function Hero({ images, doordashUrl, grubhubUrl }: Props) {
     </section>
   );
 }
+
 
 
 

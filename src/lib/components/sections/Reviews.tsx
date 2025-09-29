@@ -19,6 +19,7 @@ type ReviewsProps = {
   reviews: Review[];
   doordashUrl: string;
   grubhubUrl: string;
+  ubereatsUrl: string;
   googleReviewsUrl: string;
   restaurantName?: string;
   priceRange?: string;
@@ -79,7 +80,7 @@ function ReviewCard({ review }: { review: Review }) {
           </div>
         ) : null}
       </div>
-      <p className="text-sm leading-relaxed text-theme-muted">"{review.quote}"</p>
+      <p className="text-sm leading-relaxed text-theme-muted">&ldquo;{review.quote}&rdquo;</p>
       <div className="flex flex-wrap gap-2 text-[11px]">
         {scores.map((score) => (
           <span
@@ -95,14 +96,14 @@ function ReviewCard({ review }: { review: Review }) {
   );
 }
 
-export function Reviews({ reviews, doordashUrl, grubhubUrl, googleReviewsUrl, restaurantName, priceRange }: ReviewsProps) {
-  if (!reviews?.length) return null;
+export function Reviews({ reviews, doordashUrl, grubhubUrl, ubereatsUrl, googleReviewsUrl, restaurantName, priceRange }: ReviewsProps) {
+  const reviewList = React.useMemo(() => (Array.isArray(reviews) ? reviews : []), [reviews]);
 
   const structuredData = React.useMemo<Record<string, unknown> | null>(() => {
-    if (!reviews.length) return null;
+    if (!reviewList.length) return null;
 
-    const averageRating = reviews.reduce((total, review) => total + review.rating, 0) / reviews.length;
-    const reviewEntries = reviews.map((review, index) => {
+    const averageRating = reviewList.reduce((total, review) => total + review.rating, 0) / reviewList.length;
+    const reviewEntries = reviewList.map((review, index) => {
       const authorName = review.label.includes('|') ? review.label.split('|')[0].trim() : review.label.trim();
       return {
         '@type': 'Review',
@@ -125,11 +126,11 @@ export function Reviews({ reviews, doordashUrl, grubhubUrl, googleReviewsUrl, re
       };
     });
 
-    const relatedProfiles = [googleReviewsUrl, doordashUrl, grubhubUrl].filter(
+    const relatedProfiles = [googleReviewsUrl, doordashUrl, grubhubUrl, ubereatsUrl].filter(
       (value): value is string => typeof value === 'string' && value.trim().length > 0
     );
     const restaurantTitle = restaurantName && restaurantName.trim().length ? restaurantName : "These Freakin' Empanadas & More";
-    const derivedPriceRange = priceRange && priceRange.trim().length ? priceRange : reviews.find((item) => item.priceRange.trim().length)?.priceRange ?? '$$';
+    const derivedPriceRange = priceRange && priceRange.trim().length ? priceRange : reviewList.find((item) => item.priceRange.trim().length)?.priceRange ?? '$$';
 
     const data: Record<string, unknown> = {
       '@context': 'https://schema.org',
@@ -140,7 +141,7 @@ export function Reviews({ reviews, doordashUrl, grubhubUrl, googleReviewsUrl, re
       aggregateRating: {
         '@type': 'AggregateRating',
         ratingValue: Number(averageRating.toFixed(1)),
-        reviewCount: reviews.length,
+        reviewCount: reviewList.length,
         bestRating: 5,
         worstRating: 1
       },
@@ -155,7 +156,9 @@ export function Reviews({ reviews, doordashUrl, grubhubUrl, googleReviewsUrl, re
     }
 
     return data;
-  }, [reviews, googleReviewsUrl, doordashUrl, grubhubUrl, restaurantName, priceRange]);
+  }, [reviewList, googleReviewsUrl, doordashUrl, grubhubUrl, ubereatsUrl, restaurantName, priceRange]);
+
+  if (!reviewList.length) return null;
 
   return (
     <section id="reviews" className="relative mx-auto max-w-6xl px-4 py-16">
@@ -184,7 +187,7 @@ export function Reviews({ reviews, doordashUrl, grubhubUrl, googleReviewsUrl, re
           className="scrollbar-none -mx-4 flex snap-x snap-mandatory gap-6 overflow-x-auto px-4 pb-8"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
-          {reviews.map((review) => (
+          {reviewList.map((review) => (
             <ReviewCard key={review.id} review={review} />
           ))}
         </div>

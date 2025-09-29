@@ -15,6 +15,7 @@ type AboutPageProps = {
   restaurantHours: string;
   grubhubUrl: string;
   doordashUrl: string;
+  ubereatsUrl: string;
   linkTreeUrl: string;
   heroImages?: HeroImage[];
 };
@@ -91,6 +92,7 @@ export function AboutPage({
   restaurantHours,
   grubhubUrl,
   doordashUrl,
+  ubereatsUrl,
   linkTreeUrl,
   heroImages,
 }: AboutPageProps) {
@@ -98,7 +100,7 @@ export function AboutPage({
     return [
       { href: "/", label: "Home" },
       { href: "#story", label: "Story" },
-      { href: "#pillars", label: "What We\'re About" },
+      { href: "#pillars", label: "What We?re About" },
       { href: "#visit", label: "Visit" },
       { href: "#culture", label: "Culture" },
       { href: "#newsletter", label: "Newsletter" },
@@ -111,16 +113,16 @@ export function AboutPage({
     const previousDescription = document.querySelector<HTMLMetaElement>("meta[name=\"description\"]");
     const originalDescriptionContent = previousDescription?.getAttribute("content") ?? "";
 
-    document.title = "About – These Freakin\' Empanadas (Wood-Ridge, NJ)";
+    document.title = "About – These Freakin? Empanadas (Wood-Ridge, NJ)";
     if (previousDescription) {
       previousDescription.setAttribute(
         "content",
-        "From sold-out wrestling nights to an award-winning food truck and our Wood-Ridge restaurant—discover the story behind These Freakin\' Empanadas and our signature flavors."
+        "From sold-out wrestling nights to an award-winning food truck and our Wood-Ridge restaurant—discover the story behind These Freakin? Empanadas and our signature flavors."
       );
     } else {
       const meta = document.createElement("meta");
       meta.name = "description";
-      meta.content = "From sold-out wrestling nights to an award-winning food truck and our Wood-Ridge restaurant—discover the story behind These Freakin\' Empanadas and our signature flavors.";
+      meta.content = "From sold-out wrestling nights to an award-winning food truck and our Wood-Ridge restaurant—discover the story behind These Freakin? Empanadas and our signature flavors.";
       document.head.appendChild(meta);
     }
 
@@ -143,12 +145,12 @@ export function AboutPage({
 
   return (
     <div className="flex min-h-screen flex-col bg-theme-page text-theme-primary">
-      <Header restaurantName={restaurantName} doordashUrl={doordashUrl} grubhubUrl={grubhubUrl} navLinks={navLinks} />
+      <Header restaurantName={restaurantName} doordashUrl={doordashUrl} grubhubUrl={grubhubUrl} ubereatsUrl={ubereatsUrl} navLinks={navLinks} />
       <main className="flex-1">
         <section id="hero" className="relative isolate overflow-hidden border-b border-theme bg-gradient-to-br from-[rgba(79,35,119,0.65)] via-[rgba(5,5,5,0.9)] to-[rgba(195,132,22,0.35)]">
           <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 py-16 lg:flex-row lg:items-center lg:py-24">
             <div className="relative z-10 max-w-2xl space-y-5">
-              <p className="text-xs uppercase tracking-[0.4em] text-brand-accent">These Freakin\' Empanadas</p>
+              <p className="text-xs uppercase tracking-[0.4em] text-brand-accent">These Freakin? Empanadas</p>
               <h1 className="text-4xl font-semibold sm:text-5xl">From the ring to the kitchen.</h1>
               <p className="text-lg text-theme-muted">
                 A hunch, a handful of empanadas, and a New Jersey hustle.
@@ -156,10 +158,25 @@ export function AboutPage({
               <p className="text-theme-muted">
                 From the ring to the kitchen — our journey began with a hunch and a handful of empanadas.
               </p>
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap items-center gap-3">
                 <a href={doordashUrl} target="_blank" rel="noreferrer">
-                  <Button className="min-w-[160px] text-base">Order Now</Button>
+                  <Button className="min-w-[160px]" aria-label="Order on DoorDash">
+                    <span className="flex items-center justify-center gap-2">
+                      <img src="/images/DoorDash.png" alt="DoorDash" className="h-6 w-auto scale-125" />
+                      <span className="hidden sm:inline">DoorDash</span>
+                    </span>
+                  </Button>
                 </a>
+                {ubereatsUrl ? (
+                  <a href={ubereatsUrl} target="_blank" rel="noreferrer">
+                    <Button variant="ubereats" className="min-w-[160px]" aria-label="Order on Uber Eats">
+                      <span className="flex items-center justify-center gap-2">
+                        <img src="/images/UberEats.png" alt="Uber Eats" className="h-6 w-auto" />
+                        <span className="hidden sm:inline">Uber Eats</span>
+                      </span>
+                    </Button>
+                  </a>
+                ) : null}
                 <a href="/">
                   <Button variant="outline" className="min-w-[160px] text-base">Back to Menu</Button>
                 </a>
@@ -199,7 +216,7 @@ export function AboutPage({
             <blockquote className="mt-12 max-w-3xl rounded-2xl border border-theme-strong bg-theme-surface p-6 text-lg text-theme-muted">
               <span className="block text-sm font-semibold uppercase tracking-[0.25em] text-brand-accent">Word on the street</span>
               <p className="mt-3 text-xl font-medium text-theme-primary">
-                These Freakin' Empanadas isn't just a name—it is what people say after the first bite.
+                These Freakin? Empanadas isn?t just a name—it is what people say after the first bite.
               </p>
             </blockquote>
           </div>
@@ -279,15 +296,35 @@ export function AboutPage({
                     </dl>
                   </div>
                 </div>
-                <div className="flex flex-wrap gap-3 text-sm">
+                <div className="flex flex-wrap items-center gap-3 text-sm">
                   <a href={googleMapsUrl} target="_blank" rel="noreferrer">
                     <Button className="min-w-[160px]">Get Directions</Button>
                   </a>
                   <a href={doordashUrl} target="_blank" rel="noreferrer">
-                    <Button variant="secondary" className="min-w-[160px]">Order on DoorDash</Button>
+                    <Button className="min-w-[160px]" aria-label="Order on DoorDash">
+                      <span className="flex items-center justify-center gap-2">
+                        <img src="/images/DoorDash.png" alt="DoorDash" className="h-5 w-auto" />
+                        <span>DoorDash</span>
+                      </span>
+                    </Button>
                   </a>
+                  {ubereatsUrl ? (
+                    <a href={ubereatsUrl} target="_blank" rel="noreferrer">
+                      <Button variant="ubereats" className="min-w-[160px]" aria-label="Order on Uber Eats">
+                        <span className="flex items-center justify-center gap-2">
+                          <img src="/images/UberEats.png" alt="Uber Eats" className="h-5 w-auto" />
+                          <span>Uber Eats</span>
+                        </span>
+                      </Button>
+                    </a>
+                  ) : null}
                   <a href={grubhubUrl} target="_blank" rel="noreferrer">
-                    <Button variant="outline" className="min-w-[160px] border-[color:rgba(255,127,1,0.55)]">Order on Grubhub</Button>
+                    <Button variant="secondary" className="min-w-[160px]" aria-label="Order on Grubhub">
+                      <span className="flex items-center justify-center gap-2">
+                        <img src="/images/Grubhub.png" alt="Grubhub" className="h-5 w-auto" />
+                        <span>Grubhub</span>
+                      </span>
+                    </Button>
                   </a>
                   <a href={`tel:${restaurantPhone.replace(/[^\d+]/g, "")}`}>
                     <Button variant="outline" className="min-w-[160px]">Call Us</Button>
@@ -297,7 +334,7 @@ export function AboutPage({
               <div className="flex flex-col gap-4">
                 <div
                   role="img"
-                  aria-label="Map showing the location of These Freakin' Empanadas in Wood-Ridge, New Jersey"
+                  aria-label="Map showing the location of These Freakin? Empanadas in Wood-Ridge, New Jersey"
                   className="relative overflow-hidden rounded-3xl border border-theme-strong bg-[linear-gradient(135deg,rgba(79,35,119,0.35)_0%,rgba(244,165,26,0.2)_100%)] p-6 text-sm text-theme-muted"
                 >
                   <div className="absolute inset-0 grid place-items-center text-center text-theme-soft">
@@ -320,7 +357,7 @@ Replace with live map.
                     ))}
                   </ul>
                   <p className="mt-4 text-theme-soft">
-                    These Freakin' Empanadas is not just a catchy name—it is what people say after they take their first bite.
+                    These Freakin? Empanadas is not just a catchy name—it is what people say after they take their first bite.
                   </p>
                 </div>
               </div>
@@ -361,7 +398,7 @@ Replace with live map.
                 required
               />
               <Button type="submit" className="sm:min-w-[160px]">
-                Join the Freakin' List
+                Join the Freakin’ List
               </Button>
             </form>
             <p className="mt-3 text-xs text-theme-soft">No spam, just the good stuff.</p>
@@ -376,8 +413,23 @@ Replace with live map.
             </p>
             <div className="flex flex-wrap justify-center gap-3">
               <a href={doordashUrl} target="_blank" rel="noreferrer">
-                <Button className="min-w-[160px] text-base">Order Now</Button>
+                <Button className="min-w-[160px]" aria-label="Order on DoorDash">
+                  <span className="flex items-center justify-center gap-2">
+                    <img src="/images/DoorDash.png" alt="DoorDash" className="h-6 w-auto scale-125" />
+                    <span className="hidden sm:inline">DoorDash</span>
+                  </span>
+                </Button>
               </a>
+              {ubereatsUrl ? (
+                <a href={ubereatsUrl} target="_blank" rel="noreferrer">
+                  <Button variant="ubereats" className="min-w-[160px]" aria-label="Order on Uber Eats">
+                    <span className="flex items-center justify-center gap-2">
+                      <img src="/images/UberEats.png" alt="Uber Eats" className="h-6 w-auto" />
+                      <span className="hidden sm:inline">Uber Eats</span>
+                    </span>
+                  </Button>
+                </a>
+              ) : null}
               <a href={linkTreeUrl} target="_blank" rel="noreferrer">
                 <Button variant="outline" className="min-w-[160px] text-base">All Ordering Options</Button>
               </a>

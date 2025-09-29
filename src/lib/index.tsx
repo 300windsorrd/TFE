@@ -33,6 +33,7 @@ import { cn } from './components/utils/cn';
 
 const DEFAULT_DD = 'https://www.doordash.com/store/these-freakin-empanadas-and-more-wood-ridge-34379601/71715400/?srsltid=AfmBOop7RQWjGGjS_ozZrRP0mAFSNaHmv2phAm0y5CY9PepFgB4OLzIp';
 const DEFAULT_GH = 'https://www.grubhub.com/restaurant/these-freakin-empanadas-and-more-251-b-valley-blvd-wood-ridge/11509544';
+const DEFAULT_UE = 'https://www.ubereats.com/store/these-freakin-empanadas-and-more/QvXUmLmhVISDHsbJ5ENKzw?srsltid=AfmBOopYGev0NTBXKubXH4W31rvHT7_CaoJCKZ0DIbRiedYVB30m9ycb';
 const DEFAULT_LINKTREE = 'https://linktr.ee/freakinempanadas';
 const DEFAULT_GOOGLE_REVIEWS = 'https://www.google.com/maps/place/These+Freakin%27+Empanadas+%26+More/@40.8544897,-74.087359,17z/data=!4m7!3m6!1s0x89c2f8a0fb50a499:0xb216a73ab6090d37!8m2!3d40.8544897!4d-74.087359!9m1!1b1!16s%2Fg%2F11t9t2h24k#lrd=0x89c2f8a0fb50a499:0xb216a73ab6090d37,1';
 
@@ -85,6 +86,7 @@ export default function TheseFreakinEmpanadas({
   restaurantHours = 'Tue\u2013Sat 11:00 AM\u20137:00 PM; Sun 11:00 AM\u20135:00 PM; Mon closed',
   doordashUrl = DEFAULT_DD,
   grubhubUrl = DEFAULT_GH,
+  ubereatsUrl = DEFAULT_UE,
   googleReviewsUrl = DEFAULT_GOOGLE_REVIEWS,
   linkTreeUrl = DEFAULT_LINKTREE,
   heroImages,
@@ -122,20 +124,21 @@ export default function TheseFreakinEmpanadas({
 
   return (
     <div className={rootClassName}>
-      <Header restaurantName={restaurantName} doordashUrl={doordashUrl} grubhubUrl={grubhubUrl} />
+      <Header restaurantName={restaurantName} doordashUrl={doordashUrl} grubhubUrl={grubhubUrl} ubereatsUrl={ubereatsUrl} />
       <main className="flex-1">
-        <Hero images={images} doordashUrl={doordashUrl} grubhubUrl={grubhubUrl} />
-        <FeaturedMenu items={menuItems} doordashUrl={doordashUrl} grubhubUrl={grubhubUrl} />
+        <Hero images={images} doordashUrl={doordashUrl} grubhubUrl={grubhubUrl} ubereatsUrl={ubereatsUrl} />
+        <FeaturedMenu items={menuItems} doordashUrl={doordashUrl} grubhubUrl={grubhubUrl} ubereatsUrl={ubereatsUrl} />
         <About address={restaurantAddress} phone={restaurantPhone} hours={restaurantHours} />
         <Reviews
           reviews={FEATURED_REVIEWS}
           doordashUrl={doordashUrl}
           grubhubUrl={grubhubUrl}
+          ubereatsUrl={ubereatsUrl}
           googleReviewsUrl={googleReviewsUrl}
           restaurantName={restaurantName}
           priceRange='$10-$20'
         />
-        <OrderNowBanner doordashUrl={doordashUrl} grubhubUrl={grubhubUrl} linkTreeUrl={linkTreeUrl} phone={restaurantPhone} />
+        <OrderNowBanner doordashUrl={doordashUrl} grubhubUrl={grubhubUrl} ubereatsUrl={ubereatsUrl} linkTreeUrl={linkTreeUrl} phone={restaurantPhone} />
       </main>
       <Footer />
     </div>

@@ -14,9 +14,10 @@ type Props = {
   restaurantName: string;
   doordashUrl: string;
   grubhubUrl: string;
+  ubereatsUrl?: string;
 };
 
-export function Header({ restaurantName, doordashUrl, grubhubUrl }: Props) {
+export function Header({ restaurantName, doordashUrl, grubhubUrl, ubereatsUrl }: Props) {
   const [open, setOpen] = React.useState(false);
   const [show, setShow] = React.useState(false); // mount drawer only when true
   const headerRef = React.useRef<HTMLElement | null>(null);
@@ -140,6 +141,13 @@ export function Header({ restaurantName, doordashUrl, grubhubUrl }: Props) {
               <img src="/images/DoorDash.png" alt="Order on DoorDash" className="h-6 w-auto scale-125" />
             </Button>
           </a>
+          {ubereatsUrl ? (
+            <a href={ubereatsUrl} target="_blank" rel="noreferrer">
+              <Button variant="ubereats">
+                <img src="/images/UberEats.png" alt="Order on Uber Eats" className="h-6 w-auto" />
+              </Button>
+            </a>
+          ) : null}
           <a href={grubhubUrl} target="_blank" rel="noreferrer">
             <Button variant="secondary" className="border border-[color:rgba(255,127,1,0.55)]">
               <img src="/images/Grubhub.png" alt="Order on Grubhub" className="h-6 w-auto" />
@@ -230,12 +238,19 @@ export function Header({ restaurantName, doordashUrl, grubhubUrl }: Props) {
                   </a>
                 ))}
               </nav>
-              <div className="mt-4 grid grid-cols-2 gap-2">
+              <div className="mt-4 grid gap-2">
                 <a href={doordashUrl} target="_blank" rel="noreferrer" onClick={closeMenu}>
                   <Button className="w-full">
                     <img src="/images/DoorDash.png" alt="Order on DoorDash" className="h-6 w-auto mx-auto scale-125" />
                   </Button>
                 </a>
+                {ubereatsUrl ? (
+                  <a href={ubereatsUrl} target="_blank" rel="noreferrer" onClick={closeMenu}>
+                    <Button variant="ubereats" className="w-full">
+                      <img src="/images/UberEats.png" alt="Order on Uber Eats" className="h-6 w-auto mx-auto" />
+                    </Button>
+                  </a>
+                ) : null}
                 <a href={grubhubUrl} target="_blank" rel="noreferrer" onClick={closeMenu}>
                   <Button variant="secondary" className="w-full border border-[color:rgba(255,127,1,0.55)]">
                     <img src="/images/Grubhub.png" alt="Order on Grubhub" className="h-6 w-auto mx-auto" />

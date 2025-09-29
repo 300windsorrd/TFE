@@ -9,6 +9,7 @@ type FeaturedMenuProps = {
   items: MenuItem[];
   doordashUrl?: string;
   grubhubUrl?: string;
+  ubereatsUrl?: string;
 };
 
 function fmtUSD(n: number | undefined) {
@@ -16,7 +17,7 @@ function fmtUSD(n: number | undefined) {
   return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n);
 }
 
-export function FeaturedMenu({ items, doordashUrl, grubhubUrl }: FeaturedMenuProps) {
+export function FeaturedMenu({ items, doordashUrl, grubhubUrl, ubereatsUrl }: FeaturedMenuProps) {
   const activeItems = items.filter((item) => item.isActive !== false);
   const byCategory = activeItems.reduce<Record<string, MenuItem[]>>((acc, item) => {
     (acc[item.category] ||= []).push(item);
@@ -35,9 +36,11 @@ export function FeaturedMenu({ items, doordashUrl, grubhubUrl }: FeaturedMenuPro
             {list.map((item) => {
               const doorDashHref = doordashUrl ?? item.orderLinks?.doordash;
               const grubhubHref = grubhubUrl ?? item.orderLinks?.grubhub;
+              const uberEatsHref = ubereatsUrl ?? item.orderLinks?.ubereats;
               const hasDoorDash = Boolean(doorDashHref);
               const hasGrubhub = Boolean(grubhubHref);
-              const hasLinks = hasDoorDash || hasGrubhub;
+              const hasUberEats = Boolean(uberEatsHref);
+              const hasLinks = hasDoorDash || hasGrubhub || hasUberEats;
               const isActive = activeItemId === item.id;
 
               return (
@@ -96,7 +99,7 @@ export function FeaturedMenu({ items, doordashUrl, grubhubUrl }: FeaturedMenuPro
                         )}
                       >
                         {(() => {
-                          const prices = [item.prices?.doordash, item.prices?.grubhub].filter(
+                          const prices = [item.prices?.doordash, item.prices?.grubhub, item.prices?.ubereats].filter(
                             (n): n is number => typeof n === 'number'
                           );
                           const unified = prices.length ? Math.min(...prices) : undefined;
@@ -122,7 +125,7 @@ export function FeaturedMenu({ items, doordashUrl, grubhubUrl }: FeaturedMenuPro
                         {hasLinks ? (
                           <>
                             <p className="text-xs uppercase tracking-[0.35em] text-white/80">Order Now</p>
-                            <div className="flex w-full flex-col gap-2 sm:flex-row">
+                            <div className="flex w-full flex-col gap-2 sm:flex-row sm:flex-wrap">
                               {hasDoorDash && doorDashHref && (
                                 <a
                                   href={doorDashHref}
@@ -137,6 +140,25 @@ export function FeaturedMenu({ items, doordashUrl, grubhubUrl }: FeaturedMenuPro
                                     <span className="flex items-center justify-center gap-2">
                                       <img src="/images/DoorDash.png" alt="DoorDash" className="h-5 w-auto" />
                                       <span>DoorDash</span>
+                                    </span>
+                                  </Button>
+                                </a>
+                              )}
+                              {hasUberEats && uberEatsHref && (
+                                <a
+                                  href={uberEatsHref}
+                                  target="_blank"
+                                  rel="noreferrer noopener"
+                                  className="flex-1"
+                                >
+                                  <Button
+                                    variant="ubereats"
+                                    className="h-11 w-full border border-[color:rgba(6,193,127,0.4)] shadow-lg shadow-emerald-500/20"
+                                    aria-label={`Order ${item.name} on Uber Eats`}
+                                  >
+                                    <span className="flex items-center justify-center gap-2">
+                                      <img src="/images/UberEats.png" alt="Uber Eats" className="h-5 w-auto" />
+                                      <span>Uber Eats</span>
                                     </span>
                                   </Button>
                                 </a>
@@ -177,3 +199,4 @@ export function FeaturedMenu({ items, doordashUrl, grubhubUrl }: FeaturedMenuPro
     </section>
   );
 }
+

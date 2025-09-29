@@ -20,7 +20,7 @@ export function RestaurantJSONLD({ name, address, phone, hours, sameAs }: { name
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />;
 }
 
-export function MenuJSONLD({ sections, doordashUrl, grubhubUrl }: { sections: Array<{ name: string; items: MenuItem[] }>; doordashUrl?: string; grubhubUrl?: string }) {
+export function MenuJSONLD({ sections, doordashUrl, grubhubUrl, ubereatsUrl }: { sections: Array<{ name: string; items: MenuItem[] }>; doordashUrl?: string; grubhubUrl?: string; ubereatsUrl?: string }) {
   const data = {
     '@context': 'https://schema.org',
     '@type': 'Menu',
@@ -38,6 +38,9 @@ export function MenuJSONLD({ sections, doordashUrl, grubhubUrl }: { sections: Ar
             : null,
           item.prices?.grubhub && (grubhubUrl || item.orderLinks?.grubhub)
             ? { '@type': 'Offer', priceCurrency: 'USD', price: item.prices.grubhub, url: grubhubUrl || item.orderLinks?.grubhub }
+            : null,
+          item.prices?.ubereats && (ubereatsUrl || item.orderLinks?.ubereats)
+            ? { '@type': 'Offer', priceCurrency: 'USD', price: item.prices.ubereats, url: ubereatsUrl || item.orderLinks?.ubereats }
             : null
         ].filter(Boolean)
       }))

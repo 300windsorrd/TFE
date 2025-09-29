@@ -17,8 +17,8 @@ export type MenuItem = {
     | 'Combos'
     | 'Sandwiches'
     | 'Sides';
-  prices: { doordash?: number; grubhub?: number };
-  orderLinks: { doordash?: string; grubhub?: string };
+  prices: { doordash?: number; grubhub?: number; ubereats?: number };
+  orderLinks: { doordash?: string; grubhub?: string; ubereats?: string };
   tags?: ('New' | 'Most-Loved' | 'Vegan' | 'Spicy')[];
   image?: string;
   isActive?: boolean;
@@ -32,12 +32,10 @@ export type TheseFreakinEmpanadasProps = {
   restaurantHours?: string; // "Tue-Sat 11:00 AM-7:00 PM; Sun 11:00 AM-5:00 PM; Mon closed"
   grubhubUrl?: string; // default provided
   doordashUrl?: string; // default provided
+  ubereatsUrl?: string; // default provided
   googleReviewsUrl?: string; // default provided
   linkTreeUrl?: string; // default provided
   heroImages?: HeroImage[];
   customStyles?: CustomStyles;
   className?: string;
 };
-
-
-
