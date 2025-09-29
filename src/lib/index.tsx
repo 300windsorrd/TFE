@@ -40,7 +40,6 @@ const DEFAULT_GOOGLE_REVIEWS = 'https://www.google.com/maps/place/These+Freakin%
 const FEATURED_REVIEWS: Review[] = [
   {
     id: 'review-a',
-    label: 'Review A | Google',
     quote: "If you're in Wood-Ridge, you need to check out These Freakin' Empanadas. The cheese empanadas are made fresh to order, so they come out hot, melty, and crispy. Great vibe, friendly staff, and perfect for a quick bite or takeout. Definitely recommend it.",
     rating: 5,
     priceRange: '$10-$20',
@@ -49,7 +48,6 @@ const FEATURED_REVIEWS: Review[] = [
   },
   {
     id: 'review-b',
-    label: 'Review B | Google',
     quote: "Great food, great people. These empanadas were made with love and you can taste it. Definitely making the trip from NYC again!",
     rating: 5,
     priceRange: '$10-$20',
@@ -59,7 +57,6 @@ const FEATURED_REVIEWS: Review[] = [
   },
   {
     id: 'review-c',
-    label: 'Review C | Google',
     quote: 'Empanadas done right - fresh, hot, and crispy with delicious fillings from savory meat and cheese to sweet desserts. Keep up the good work!',
     rating: 5,
     priceRange: '$10-$20',
@@ -69,7 +66,6 @@ const FEATURED_REVIEWS: Review[] = [
   },
   {
     id: 'review-d',
-    label: 'Review D | Google',
     quote: "Outstanding service. The food is wonderful. I can't wait to go back again and again until I've had every option on their menu. Incredible!",
     rating: 5,
     priceRange: '$10-$20',

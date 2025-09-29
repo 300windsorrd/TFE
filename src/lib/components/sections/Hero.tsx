@@ -53,13 +53,14 @@ export function Hero({ images, doordashUrl, grubhubUrl, ubereatsUrl }: Props) {
             </a>
           </div>
           <a href="#menu">
-            <Button variant="outline" className="!text-white !border-white/30 hover:!bg-white/10">View Menu</Button>
+            <Button variant="primary">View Menu</Button>
           </a>
         </div>
       </div>
     </section>
   );
 }
+
 
 
 

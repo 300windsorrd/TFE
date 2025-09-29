@@ -1,11 +1,11 @@
-﻿import * as React from 'react';
+import * as React from 'react';
 import { cn } from '../utils/cn';
 
 type ReviewScore = { label: string; score: string };
 
 type Review = {
   id: string;
-  label: string;
+  label?: string;
   quote: string;
   rating: number;
   priceRange: string;
@@ -43,6 +43,7 @@ function ReviewCard({ review }: { review: Review }) {
   const scores = review.scores && review.scores.length ? review.scores : defaultScores;
   const totalStars = Math.max(1, Math.min(5, Math.round(review.rating)));
   const timeframeText = review.isNew ? `NEW | ${review.timeframe}` : review.timeframe;
+  const label = review.label?.trim();
 
   return (
     <article className="relative flex w-[320px] shrink-0 snap-center flex-col gap-5 rounded-3xl border border-theme-subtle bg-theme-surface-strong p-7 text-theme-primary shadow-[0_12px_35px_rgba(0,0,0,0.35)] backdrop-blur">
@@ -91,7 +92,9 @@ function ReviewCard({ review }: { review: Review }) {
           </span>
         ))}
       </div>
-      <footer className="border-t border-theme-subtle pt-4 text-xs uppercase tracking-wide text-theme-soft">{review.label}</footer>
+      {label ? (
+        <footer className="border-t border-theme-subtle pt-4 text-xs uppercase tracking-wide text-theme-soft">{label}</footer>
+      ) : null}
     </article>
   );
 }
@@ -104,7 +107,8 @@ export function Reviews({ reviews, doordashUrl, grubhubUrl, ubereatsUrl, googleR
 
     const averageRating = reviewList.reduce((total, review) => total + review.rating, 0) / reviewList.length;
     const reviewEntries = reviewList.map((review, index) => {
-      const authorName = review.label.includes('|') ? review.label.split('|')[0].trim() : review.label.trim();
+      const rawLabel = review.label?.trim() ?? '';
+      const authorName = rawLabel.includes('|') ? rawLabel.split('|')[0].trim() : rawLabel;
       return {
         '@type': 'Review',
         name: `Google review ${index + 1}`,
